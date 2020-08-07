@@ -3,12 +3,12 @@
 rust-g (pronounced rusty-g) is a library which offloads certain expensive or
 difficult tasks from BYOND.
 
-This library is currently used in the [tgstation] codebase, and is required for
+This library is currently used in the [beestation] codebase, and is required for
 it to run. A pre-compiled DLL version can be found in the repo root, but you
 can build your own from this repo at your preference. Builds can also be found
 on the [releases page].
 
-[releases page]: https://github.com/tgstation/rust-g/releases
+[releases page]: https://github.com/beestation/rust-g/releases
 
 ## Dependencies
 
@@ -58,8 +58,7 @@ System libraries:
 
 The [cargo] tool handles compilation, as well as automatically downloading and
 compiling all Rust dependencies. The default configuration is suitable for
-use with the [tgstation] codebase. To compile in release mode (recommended for
-speed):
+use with the [tgstation] codebase, but not [beestation]. To compile in release mode:
 
 ```sh
 cargo build --release
@@ -161,10 +160,8 @@ open("rust_g", O_RDONLY|O_NONBLOCK|O_LARGEFILE|O_DIRECTORY|O_CLOEXEC) = -1 ENOTD
 If you're still having problems, ask in the [Coderbus Discord]'s
 `#tooling-questions` channel.
 
-You can also try [tgstation]'s IRC, `#coderbus` on Rizon, but it is usually
-quiet.
-
 [tgstation]: https://github.com/tgstation/tgstation
+[ beestation ]: https://github.com/beestation/beestation-hornet
 [Rust]: https://rust-lang.org
 [cargo]: https://doc.rust-lang.org/cargo/
 [rustup]: https://rustup.rs/
