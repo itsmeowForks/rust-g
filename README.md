@@ -37,9 +37,9 @@ The [Rust] compiler:
     # in the `rust-g` directory...
     cd rust-g
     # Linux
-    rustup override add stable-i686-unknown-linux-gnu
+    rustup target add i686-unknown-linux-gnu
     # Windows
-    rustup override add stable-i686-pc-windows-msvc
+    rustup target add i686-pc-windows-msvc
     ```
 
 System libraries:
@@ -61,7 +61,10 @@ compiling all Rust dependencies. The default configuration is suitable for
 use with the [tgstation] codebase, but not [beestation]. To compile in release mode:
 
 ```sh
-cargo build --release
+# Linux
+cargo build --release --target=i686-unknown-linux-gnu
+# Windows
+cargo build --release --target=i686-pc-windows-msvc
 ```
 
 On Linux, the output will be `target/release/librust_g.so`.
@@ -71,7 +74,11 @@ On Windows, the output will be `target/release/rust_g.dll`.
 For more advanced configuration, a list of modules may be passed:
 
 ```sh
-cargo build --release --features dmi,file,log,url,http
+export PKG_CONFIG_ALLOW_CROSS=1
+# Linux
+cargo build --release --target=i686-unknown-linux-gnu --features dmi,file,log,url,http
+# Windows
+cargo build --release --target=i686-pc-windows-msvc --features dmi,file,log,url,http
 ```
 
 The default features are:
@@ -81,11 +88,11 @@ The default features are:
 * git: Functions for robustly checking the current git revision.
 * http: Asynchronous HTTP(s) client supporting most standard methods.
 * sql: Asynchronous MySQL/MariaDB client library.
+* noise: 2d Perlin noise.
 
 Additional features are:
-* noise: 2d Perlin noise.
 * url: Faster replacements for `url_encode` and `url_decode`.
-* file: Faster replacements for `file2text` and `text2file`.
+* file: Faster replacements for `file2text` and `text2file`, as well as reading or checking if files exist.
 * hash: Faster replacement for `md5`, support for SHA-1, SHA-256, and SHA-512. Requires OpenSSL on Linux.
 
 ## Installing

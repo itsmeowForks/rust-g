@@ -1,34 +1,4 @@
 #[macro_use]
-extern crate failure;
-
-#[cfg(feature = "chrono")]
-extern crate chrono;
-#[cfg(feature = "crypto-hash")]
-extern crate crypto_hash;
-#[cfg(feature = "git2")]
-extern crate git2;
-#[cfg(feature = "hex")]
-extern crate hex;
-#[cfg(feature = "noise")]
-extern crate noise;
-#[cfg(feature = "percent-encoding")]
-extern crate percent_encoding;
-#[cfg(feature = "png")]
-extern crate png;
-#[cfg(feature = "http")]
-extern crate reqwest;
-#[cfg(any(feature = "http", feature = "sql"))]
-#[macro_use]
-extern crate serde_derive;
-#[cfg(any(feature = "http", feature = "sql"))]
-extern crate serde_json;
-#[cfg(any(feature = "http", feature = "sql"))]
-#[macro_use]
-extern crate lazy_static;
-#[cfg(feature = "sql")]
-extern crate mysql;
-
-#[macro_use]
 mod byond;
 #[allow(dead_code)]
 mod error;
@@ -44,6 +14,8 @@ pub mod git;
 pub mod hash;
 #[cfg(feature = "http")]
 pub mod http;
+#[cfg(feature = "json")]
+pub mod json;
 #[cfg(feature = "log")]
 pub mod log;
 #[cfg(feature = "noise")]
