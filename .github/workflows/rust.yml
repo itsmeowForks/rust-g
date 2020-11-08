@@ -15,18 +15,25 @@ jobs:
         with:
           toolchain: stable
           target: i686-pc-windows-msvc
-      - name: Check (all features)
+      - name: Build (all features)
         uses: actions-rs/cargo@v1
         with:
           toolchain: stable
-          command: check
+          command: build
           args: --target i686-pc-windows-msvc --all-features
-      - uses: actions-rs/cargo@v1
+      - name: Upload artifact (all features)
+        uses: actions/upload-artifact@v1
+        with:
+          name: full_rust_g.dll
+          path: target/i686-pc-windows-msvc/release/rust_g.dll
+      - name: Build (release)
+        uses: actions-rs/cargo@v1
         with:
           toolchain: stable
           command: build
           args: --target i686-pc-windows-msvc --release
-      - uses: actions/upload-artifact@v1
+      - name: Upload artifact (release)
+        uses: actions/upload-artifact@v1
         with:
           name: rust_g.dll
           path: target/i686-pc-windows-msvc/release/rust_g.dll
@@ -47,12 +54,17 @@ jobs:
         with:
           toolchain: stable
           target: i686-unknown-linux-gnu
-      - name: Check (all features)
+      - name: Build (all features)
         uses: actions-rs/cargo@v1
         with:
           toolchain: stable
-          command: check
+          command: build
           args: --target i686-unknown-linux-gnu --all-features
+      - name: Upload artifact (all features)
+        uses: actions/upload-artifact@v1
+        with:
+          name: full_librust_g.so
+          path: target/i686-unknown-linux-gnu/release/librust_g.so      
       - name: Build (Debug)
         uses: actions-rs/cargo@v1
         with:
@@ -73,7 +85,8 @@ jobs:
           toolchain: stable
           command: build
           args: --target i686-unknown-linux-gnu --release
-      - uses: actions/upload-artifact@v1
+      - name: Upload artifact (release)
+        uses: actions/upload-artifact@v1
         with:
-          name: rust_g
+          name: librust_g.so
           path: target/i686-unknown-linux-gnu/release/librust_g.so
