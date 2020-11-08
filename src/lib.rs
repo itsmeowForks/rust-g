@@ -2,6 +2,8 @@
 mod byond;
 #[allow(dead_code)]
 mod error;
+
+#[cfg(feature = "jobs")]
 mod jobs;
 
 #[cfg(feature = "dmi")]
@@ -24,6 +26,8 @@ pub mod noise_gen;
 pub mod sql;
 #[cfg(feature = "url")]
 pub mod url;
+#[cfg(feature = "unzip")]
+pub mod unzip;
 
 #[cfg(not(target_pointer_width = "32"))]
 compile_error!("rust-g must be compiled for a 32-bit target");

@@ -8,6 +8,11 @@ use thiserror::Error;
 
 #[cfg(feature = "png")]
 use png::{DecodingError, EncodingError};
+#[cfg(feature = "png")]
+use image::error::{ImageError};
+
+#[cfg(feature = "unzip")]
+use zip::result::ZipError;
 
 pub type Result<T> = result::Result<T, Error>;
 
@@ -33,6 +38,8 @@ pub enum Error {
     ParseIntError(#[from] ParseIntError),
     #[error(transparent)]
     ParseFloatError(#[from] ParseFloatError),
+    #[error(transparent)]
+    GenericImageError(#[from] ImageError),
     #[cfg(feature = "png")]
     #[error("Invalid png data.")]
     InvalidPngDataError,
@@ -42,6 +49,9 @@ pub enum Error {
     #[cfg(feature = "http")]
     #[error(transparent)]
     SerializationError(#[from] serde_json::Error),
+    #[cfg(feature = "unzip")]
+    #[error(transparent)]
+    UnzipError(#[from] ZipError)
 }
 
 impl From<Utf8Error> for Error {
