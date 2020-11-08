@@ -2,10 +2,10 @@ name: rust-g
 on:
   push:
     branches:
-    - master
+    - current-bee
   pull_request:
     branches:
-    - master
+    - current-bee
 jobs:
   build-windows:
     runs-on: windows-latest
