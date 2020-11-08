@@ -20,7 +20,7 @@ jobs:
         with:
           toolchain: stable
           command: build
-          args: --target i686-pc-windows-msvc --all-features
+          args: --target i686-pc-windows-msvc --release --all-features
       - name: Upload artifact (all features)
         uses: actions/upload-artifact@v1
         with:
@@ -53,18 +53,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          target: i686-unknown-linux-gnu
-      - name: Build (all features)
-        uses: actions-rs/cargo@v1
-        with:
-          toolchain: stable
-          command: build
-          args: --target i686-unknown-linux-gnu --all-features
-      - name: Upload artifact (all features)
-        uses: actions/upload-artifact@v1
-        with:
-          name: full_librust_g.so
-          path: target/i686-unknown-linux-gnu/release/librust_g.so      
+          target: i686-unknown-linux-gnu      
       - name: Build (Debug)
         uses: actions-rs/cargo@v1
         with:
@@ -79,6 +68,17 @@ jobs:
           args: --target i686-unknown-linux-gnu
         env:
           BYOND_BIN: /home/runner/BYOND/byond/bin
+      - name: Build (all features)
+        uses: actions-rs/cargo@v1
+        with:
+          toolchain: stable
+          command: build
+          args: --target i686-unknown-linux-gnu --release --all-features
+      - name: Upload artifact (all features)
+        uses: actions/upload-artifact@v1
+        with:
+          name: full_librust_g.so
+          path: target/i686-unknown-linux-gnu/release/librust_g.so
       - name: Build (release)
         uses: actions-rs/cargo@v1
         with:
