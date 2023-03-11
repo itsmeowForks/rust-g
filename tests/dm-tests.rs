@@ -6,10 +6,22 @@ fn git() {
     run_dm_tests("git");
 }
 
+#[cfg(feature = "toml")]
+#[test]
+fn toml() {
+    run_dm_tests("toml");
+}
+
 #[cfg(feature = "url")]
 #[test]
 fn url() {
     run_dm_tests("url");
+}
+
+#[cfg(feature = "hash")]
+#[test]
+fn hash() {
+    run_dm_tests("hash");
 }
 
 fn run_dm_tests(name: &str) {

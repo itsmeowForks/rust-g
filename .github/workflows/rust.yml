@@ -38,7 +38,7 @@ jobs:
           name: rust_g.dll
           path: target/i686-pc-windows-msvc/release/rust_g.dll
   build-linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     env:
       BYOND_MAJOR: 513
       BYOND_MINOR: 1521
@@ -48,7 +48,7 @@ jobs:
       - run: |
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt-get install g++-multilib zlib1g-dev:i386 libssl-dev:i386 pkg-config:i386
+          sudo apt-get install g++-multilib zlib1g-dev:i386 pkg-config libssl-dev:i386 libssl-dev libssl1.1:i386
           ./scripts/install_byond.sh
       - uses: actions-rs/toolchain@v1
         with:

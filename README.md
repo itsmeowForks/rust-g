@@ -49,10 +49,15 @@ System libraries:
     ```sh
     sudo dpkg --add-architecture i386
     sudo apt-get update
-    sudo apt-get install zlib1g-dev:i386 libssl-dev:i386 pkg-config:i386
+    sudo apt-get install zlib1g-dev:i386 libssl-dev:i386
     ```
 
 * Other Linux distributions install the appropriate **32-bit development** and **32-bit runtime** packages.
+
+If you want to use the `pc-windows-gnu` or similar other target ABI, do the following:
+1. Change the `"rust-analyzer.cargo.target"` setting in `.cargo/config` to `i686-pc-windows-gnu`.
+2. Run `git update-index --assume-unchanged .cargo/config`, which will tell git to 'ignore' the changes you made.
+3. If you find yourself ever wanting to change back, run `git update-index --no-assume-unchanged .cargo/config`.
 
 ## Compiling
 
@@ -74,9 +79,12 @@ cargo build --release --target i686-pc-windows-msvc
 # output: target/i686-pc-windows-msvc/release/rust_g.dll
 ```
 
+If you aren't sharing the binary with other people, consider compiling [targeting your native cpu](https://rust-lang.github.io/packed_simd/perf-guide/target-feature/rustflags.html#target-cpu) for potential performance improvements. You can do this by setting the `RUSTFLAGS` environment variable to `-C target-cpu=native`. For example, in Powershell you would use `$Env:RUSTFLAGS="-C target-cpu=native"`.
+
 To get additional features, pass a list to `--features`, for example `--features hash,url`. To get all features, pass `--all-features`. To disable the default features, pass `--no-default-features`.
 
 The default features are:
+* acreplace: Aho-Corasick string matching and replacement.
 * cellularnoise: Function to generate cellular automata-based noise.
 * dmi: DMI manipulations which are impossible from within BYOND.
   Used by the asset cache subsystem to improve load times.
@@ -85,13 +93,21 @@ The default features are:
 * http: Asynchronous HTTP(s) client supporting most standard methods.
 * json: Function to check JSON validity.
 * log: Faster log output.
-* sql: Asynchronous MySQL/MariaDB client library.
 * noise: 2d Perlin noise.
+* sql: Asynchronous MySQL/MariaDB client library.
+* time: High-accuracy time measuring.
+* toml: TOML parser.
+* url: Faster replacements for `url_encode` and `url_decode`.
 
 Additional features are:
+* batchnoise: Discrete Batched Perlin-like Noise, fast and multi-threaded - sent over once instead of having to query for every tile.
 * hash: Faster replacement for `md5`, support for SHA-1, SHA-256, and SHA-512. Requires OpenSSL on Linux.
-* url: Faster replacements for `url_encode` and `url_decode`.
+* pathfinder: An a* pathfinder used for finding the shortest path in a static node map. Not to be used for a non-static map.
+* redis_pubsub: Library for sending and receiving messages through Redis.
 * unzip: Function to download a .zip from a URL and unzip it to a directory.
+* worleynoise: Function that generates a type of nice looking cellular noise, more expensive than cellularnoise
+
+Regarding rust-analyzer: If you are using a feature set other than the default, you will need to adjust `rust-analyzer.cargo.features`.
 
 ## Installing
 
@@ -163,6 +179,7 @@ open("rust_g", O_RDONLY|O_NONBLOCK|O_LARGEFILE|O_DIRECTORY|O_CLOEXEC) = -1 ENOTD
 
 If you're still having problems, ask in the [Coderbus Discord]'s
 `#tooling-questions` channel.
+
 
 [tgstation]: https://github.com/tgstation/tgstation
 [beestation]: https://github.com/beestation/beestation-hornet
