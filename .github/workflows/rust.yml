@@ -19,10 +19,11 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           toolchain: stable
-          command: build
-          args: --target i686-pc-windows-msvc --release --all-features
-      - name: Upload artifact (all features)
-        uses: actions/upload-artifact@v1
+          command: clippy
+          args: --target i686-pc-windows-msvc --features all --locked -- -D warnings
+
+      - name: Rustfmt
+        uses: actions-rs/cargo@v1
         with:
           name: full_rust_g.dll
           path: target/i686-pc-windows-msvc/release/rust_g.dll
@@ -31,9 +32,9 @@ jobs:
         with:
           toolchain: stable
           command: build
-          args: --target i686-pc-windows-msvc --release
-      - name: Upload artifact (release)
-        uses: actions/upload-artifact@v1
+          args: --target i686-pc-windows-msvc --locked --release
+
+      - uses: actions/upload-artifact@v3
         with:
           name: rust_g.dll
           path: target/i686-pc-windows-msvc/release/rust_g.dll
@@ -54,18 +55,29 @@ jobs:
         with:
           toolchain: stable
           target: i686-unknown-linux-gnu
-      - name: Build (Debug)
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Check (all features)
+        uses: actions-rs/cargo@v1
+        with:
+          toolchain: stable
+          command: check
+          args: --target i686-unknown-linux-gnu --locked --features all
+
+      - name: Build (Debug) (all features)
         uses: actions-rs/cargo@v1
         with:
           toolchain: stable
           command: build
-          args: --target i686-unknown-linux-gnu
-      - name: Run tests
+          args: --target i686-unknown-linux-gnu --locked --features all
+
+      - name: Run tests (all features)
         uses: actions-rs/cargo@v1
         with:
           toolchain: stable
           command: test
-          args: --target i686-unknown-linux-gnu
+          args: --target i686-unknown-linux-gnu --locked --features all
         env:
           BYOND_BIN: /home/runner/BYOND/byond/bin
       - name: Build (all features)
@@ -84,9 +96,9 @@ jobs:
         with:
           toolchain: stable
           command: build
-          args: --target i686-unknown-linux-gnu --release
-      - name: Upload artifact (release)
-        uses: actions/upload-artifact@v1
+          args: --target i686-unknown-linux-gnu --locked --release
+
+      - uses: actions/upload-artifact@v3
         with:
           name: librust_g.so
           path: target/i686-unknown-linux-gnu/release/librust_g.so
