@@ -24,6 +24,8 @@ pub mod git;
 pub mod hash;
 #[cfg(feature = "http")]
 pub mod http;
+#[cfg(feature = "iconforge")]
+pub mod iconforge;
 #[cfg(feature = "json")]
 pub mod json;
 #[cfg(feature = "log")]
@@ -46,6 +48,3 @@ pub mod unzip;
 pub mod url;
 #[cfg(feature = "worleynoise")]
 pub mod worleynoise;
-
-#[cfg(not(target_pointer_width = "32"))]
-compile_error!("rust-g must be compiled for a 32-bit target");
