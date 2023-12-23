@@ -113,7 +113,8 @@ iconforge = [
     "tracy_full",
     "jobs",
     "once_cell",
-    "dashmap"
+    "dashmap",
+    "hash",
 ]
 pathfinder = ["num", "pathfinding", "serde", "serde_json"]
 redis_pubsub = ["flume", "redis", "serde", "serde_json"]
