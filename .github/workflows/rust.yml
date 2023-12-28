@@ -76,8 +76,10 @@ jobs:
     
       - uses: actions/upload-artifact@v3
         with:
-          name: full_librust_g.so
-          path: target/i686-unknown-linux-gnu/release/librust_g.so
+          name: Linux Build (All Features)
+          path: |
+            target/i686-unknown-linux-gnu/release/librust_g.so
+            target/rust_g.dm
 
       - name: Run tests (all features)
         run: cargo test --target i686-unknown-linux-gnu --locked --features all
@@ -89,5 +91,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: librust_g.so
-          path: target/i686-unknown-linux-gnu/release/librust_g.so
+          name: Linux Build (Default Features)
+          path: |
+            target/i686-unknown-linux-gnu/release/librust_g.so
+            target/rust_g.dm
