@@ -72,7 +72,7 @@ jobs:
         run: cargo check --target i686-unknown-linux-gnu --locked --features all
 
       - name: Build (release) (all features)
-        run: cargo build --target i686-unknown-linux-gnu --locked --features all
+        run: cargo build --target i686-unknown-linux-gnu --locked --release --features all
     
       - uses: actions/upload-artifact@v3
         with:
