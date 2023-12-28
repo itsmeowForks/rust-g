@@ -24,6 +24,8 @@ pub mod git;
 pub mod hash;
 #[cfg(feature = "http")]
 pub mod http;
+#[cfg(feature = "iconforge")]
+pub mod iconforge;
 #[cfg(feature = "json")]
 pub mod json;
 #[cfg(feature = "log")]
@@ -34,6 +36,8 @@ pub mod noise_gen;
 pub mod pathfinder;
 #[cfg(feature = "redis_pubsub")]
 pub mod redis_pubsub;
+#[cfg(feature = "redis_reliablequeue")]
+pub mod redis_reliablequeue;
 #[cfg(feature = "sql")]
 pub mod sql;
 #[cfg(feature = "time")]

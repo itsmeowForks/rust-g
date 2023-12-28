@@ -1,4 +1,5 @@
 use crate::error::{Error, Result};
+use base64::Engine;
 use const_random::const_random;
 const XXHASH_SEED: u64 = const_random!(u64);
 use md5::Md5;
@@ -15,6 +16,10 @@ use twox_hash::XxHash64;
 
 byond_fn!(fn hash_string(algorithm, string) {
     string_hash(algorithm, string).ok()
+});
+
+byond_fn!(fn decode_base64(string) {
+    Some(base64::prelude::BASE64_STANDARD.decode(string).unwrap())
 });
 
 byond_fn!(fn hash_file(algorithm, string) {
@@ -66,16 +71,21 @@ fn hash_algorithm<B: AsRef<[u8]>>(name: &str, bytes: B) -> Result<String> {
             hasher.write(bytes.as_ref());
             Ok(format!("{:x}", hasher.finish()))
         }
-        "base64" => Ok(base64::encode(bytes.as_ref())),
+        "xxh64_fixed" => {
+            let mut hasher = XxHash64::with_seed(17479268743136991876);
+            hasher.write(bytes.as_ref());
+            Ok(format!("{:x}", hasher.finish()))
+        }
+        "base64" => Ok(base64::prelude::BASE64_STANDARD.encode(bytes.as_ref())),
         _ => Err(Error::InvalidAlgorithm),
     }
 }
 
-fn string_hash(algorithm: &str, string: &str) -> Result<String> {
+pub fn string_hash(algorithm: &str, string: &str) -> Result<String> {
     hash_algorithm(algorithm, string)
 }
 
-fn file_hash(algorithm: &str, path: &str) -> Result<String> {
+pub fn file_hash(algorithm: &str, path: &str) -> Result<String> {
     let mut bytes: Vec<u8> = Vec::new();
     let mut file = BufReader::new(File::open(path)?);
     file.read_to_end(&mut bytes)?;
