@@ -71,6 +71,14 @@ jobs:
       - name: Check (all features)
         run: cargo check --target i686-unknown-linux-gnu --locked --features all
 
+      - name: Build (debug) (all features)
+        run: cargo build --target i686-unknown-linux-gnu --locked --features all
+
+      - name: Run tests (all features)
+        run: cargo test --target i686-unknown-linux-gnu --locked --features all
+        env:
+          BYOND_BIN: /home/runner/BYOND/byond/bin
+
       - name: Build (release) (all features)
         run: cargo build --target i686-unknown-linux-gnu --locked --release --features all
     
@@ -80,11 +88,6 @@ jobs:
           path: |
             target/i686-unknown-linux-gnu/release/librust_g.so
             target/rust_g.dm
-
-      - name: Run tests (all features)
-        run: cargo test --target i686-unknown-linux-gnu --locked --features all
-        env:
-          BYOND_BIN: /home/runner/BYOND/byond/bin
 
       - name: Build (release) (default features)
         run: cargo build --target i686-unknown-linux-gnu --locked --release
