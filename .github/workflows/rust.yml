@@ -25,12 +25,23 @@ jobs:
       - name: Rustfmt
         run: cargo fmt -- --check
 
+      - name: Build (release) (all features)
+        run: cargo build --target i686-pc-windows-msvc --locked --release --features all
+    
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Windows Build (All Features)
+          path: |
+            target/i686-pc-windows-msvc/release/rust_g.dll
+            target/i686-pc-windows-msvc/release/rust_g.pdb
+            target/rust_g.dm
+
       - name: Build (release) (default features)
         run: cargo build --target i686-pc-windows-msvc --locked --release
 
       - uses: actions/upload-artifact@v3
         with:
-          name: Windows Build
+          name: Windows Build (Default Features)
           path: |
             target/i686-pc-windows-msvc/release/rust_g.dll
             target/i686-pc-windows-msvc/release/rust_g.pdb
@@ -60,8 +71,13 @@ jobs:
       - name: Check (all features)
         run: cargo check --target i686-unknown-linux-gnu --locked --features all
 
-      - name: Build (Debug) (all features)
+      - name: Build (release) (all features)
         run: cargo build --target i686-unknown-linux-gnu --locked --features all
+    
+      - uses: actions/upload-artifact@v3
+        with:
+          name: full_librust_g.so
+          path: target/i686-unknown-linux-gnu/release/librust_g.so
 
       - name: Run tests (all features)
         run: cargo test --target i686-unknown-linux-gnu --locked --features all
