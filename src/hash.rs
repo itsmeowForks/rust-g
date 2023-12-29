@@ -102,7 +102,7 @@ fn totp_generate_tolerance(
 ) -> Result<String> {
     let mut results: Vec<String> = Vec::new();
     for i in -tolerance..(tolerance + 1) {
-        let result = totp_generate(hex_seed, i.into(), time_override)?;
+        let result = totp_generate(hex_seed, i.try_into().unwrap(), time_override)?;
         results.push(result)
     }
     Ok(serde_json::to_string(&results)?)
@@ -150,7 +150,7 @@ fn totp_generate(hex_seed: &str, offset: i64, time_override: Option<i64>) -> Res
 
     let offset: usize = (hmac[19] & 0x0F).into();
 
-    let result_bytes: [u8; 4] = hmac[offset..(offset + 4)].into();
+    let result_bytes: [u8; 4] = hmac[offset..(offset + 4)].try_into().unwrap();
 
     let full_result: u32 = u32::from_be_bytes(result_bytes);
     let result: u32 = (full_result & 0x7FFFFFFF) % 1000000;
