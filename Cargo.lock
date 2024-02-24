@@ -2729,7 +2729,7 @@ dependencies = [
 
 [[package]]
 name = "rust-g"
-version = "3.1.2"
+version = "3.1.3"
 dependencies = [
  "aho-corasick",
  "base64",
