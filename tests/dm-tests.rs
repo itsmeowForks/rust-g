@@ -26,6 +26,12 @@ fn hash() {
     run_dm_tests("hash", false);
 }
 
+#[cfg(feature = "iconforge")]
+#[test]
+fn iconforge() {
+    run_dm_tests("iconforge", false);
+}
+
 /**
  * Find a valid BYOND bin path on the system.
  */
